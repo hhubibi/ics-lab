@@ -348,14 +348,9 @@ void do_bgfg(char **argv)
     } else {
         if (jb->state == ST || jb->state == BG) {
             pid_t fp = fgpid(jobs);
-            // if (fp == jb->pid) {
-            //     jb->state = FG;
-            // }
-            // struct job_t *fgjb = getjobpid(jobs, fp);
             if (fp > 0) {
-                kill(fp, SIGTERM);
+                kill(-fp, SIGTERM);
             }
-            // printf("here\n");
             jb->state = FG;
             kill(-jb->pid, SIGCONT);
             waitfg(jb->pid);
